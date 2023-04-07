@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Barang</title>
+    <link rel="stylesheet" href="../../assets/edit.css" />
+    <link rel="shortcut icon" href="#" type="image/x-icon">
+
+  </head>
+  <body>
+    <button class="tmblbtn"><a href="../../menu/index.html">Kembali</a></button>
+    <div class="avatar">
+      <i class="fa fa-user"></i>
+  </div>
+    <form name="edit" class="login">
+      <h2>Edit Barang</h2>
+      <div class="box-login">
+        <i class="fas fa-envelope"></i>
+        <input
+          type="text"
+          name="nama_barang"
+          placeholder="nama_barang"
+          required
+          autofocus
+        />
+      </div>
+      <div class="box-login">
+        <i class="fas fa-lock"></i>
+        <input type="text" name="harga" placeholder="harga" required />
+      </div>
+      <div class="box-login">
+        <i class="fas fa-lock"></i>
+        <input type="text" name="deskripsi" placeholder="deskripsi" required />
+      </div>
+      <div class="box-login">
+        <i class="fas fa-lock"></i>
+        <input
+          type="text"
+          name="id_kategori"
+          placeholder="id_kategori"
+          required
+        />
+      </div>
+      <label>
+        Foto
+        <input type="file" name="foto" />
+      </label>
+
+      <button class="btn-login">Simpan</button>
+    <script>
+      const searchParams = new URLSearchParams(location.search);
+      fetch(`/api/barang/${searchParams.get("id")}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          document.edit.nama_barang.value = data.nama_barang;
+          document.edit.harga.value = data.harga;
+          document.edit.deskripsi.value = data.deskripsi;
+          document.edit.id_kategori.value = data.id_kategori;
+          document.edit.foto=File.foto;
+
+        });
+
+      document.edit.onsubmit = async (e) => {
+        e.preventDefault();
+        const nama_barang = document.edit.nama_barang.value;
+        const harga = document.edit.harga.value;
+        const deskripsi = document.edit.deskripsi.value;
+        const id_kategori = document.edit.id_kategori.value;
+        const foto=document.edit.foto.files[0];
+
+        await fetch(`/api/barang/${searchParams.get("id")}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          }, 
+          body: JSON.stringify({
+            nama_barang,
+            harga,
+            deskripsi,
+            id_kategori,
+            foto,
+
+          }),
+        });
+        location.href = "../../dashboard/";
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,88 @@
+body {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-size: 12px;
+  background-image: url();
+}
+
+a {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+table {
+  border-collapse: collapse;
+  position: relative;
+  margin: auto;
+  color: #444;
+  background-color: #f5ebeb;
+}
+
+table th,
+table td {
+  border: 1px solid #000;
+  padding: 30px 60px;
+  text-align: center;
+}
+
+table thead th {
+  background-color: #d5b4b4;
+  color: rgb(248, 248, 248);
+  border-color: rgb(71, 17, 141);
+  text-transform: uppercase;
+}
+
+table tbody td {
+  color: #353535;
+}
+
+table tbody tr:hover td {
+  transition: all 0.2s;
+}
+
+h2 {
+  text-align: center;
+  color: rgb(5, 57, 116);
+  padding-top: 10px;
+  letter-spacing: 10px;
+}
+img {
+  width: 200px;
+  height: 200px;
+}
+
+a.tbl-biru {
+  background-color: #867070;
+  border-radius: 20px;
+  margin-top: 20px;
+  padding: 15px 20px 15px 20px;
+  color: rgb(247, 239, 239);
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a.tbl-biru:hover {
+  background-color: #e1dfe6;
+  text-decoration: none;
+}
+
+a:hover {
+  background-color: #878296;
+  text-decoration: none;
+}
+
+a.btn {
+  text-decoration: none;
+  color: #fff;
+}
+.tmblbtn {
+  width: 100px;
+  height: 7vh;
+  border-radius: 20px;
+  background-color: #b49e85;
+  border-color: white;
+}
+
+table {
+  border: 1;
+}

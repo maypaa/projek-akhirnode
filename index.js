@@ -9,7 +9,10 @@ import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import bcrypt from "bcryptjs";
 
+
+
 const app = express();
+import multer from "multer";
 
 // MIDDLEWARE
 
@@ -18,7 +21,7 @@ app.use(cookieParser());
 
 // Untuk memeriksa otorisasi
 app.use((req, res, next) => {
-  if (req.path.startsWith("/api/login") || req.path.startsWith("/assets")) {
+  if (req.path.startsWith("/api/login") || req.path.startsWith("/assets")|| req.path.startsWith("/login")|| req.path.startsWith("/home")|| req.path.startsWith("/daftar")|| req.path.startsWith("/api/daftar")) {
     next();
   } else {
     let authorized = false;
@@ -27,39 +30,43 @@ app.use((req, res, next) => {
         jwt.verify(req.cookies.token, process.env.SECRET_KEY);
         authorized = true;
       } catch (err) {
-        res.setHeader("Cache-Control", "no-store"); // khusus Vercel
+        res.setHeader("Cache-Control","no-store"); // khusus Vercel
         res.clearCookie("token");
       }
     }
     if (authorized) {
-      if (req.path.startsWith("/login")) {
+      if (req.path.startsWith("/home")) {
         res.redirect("/");
       } else {
         next();
       }
     } else {
-      if (req.path.startsWith("/login")) {
+      if (req.path.startsWith("/home")) {
         next();
       } else {
         if (req.path.startsWith("/api")) {
           res.status(401);
           res.send("Anda harus login terlebih dahulu.");
         } else {
-          res.redirect("/login");
+          res.redirect("/home");
         }
       }
     }
   }
 });
 
+
+
 // Untuk mengakses file statis
-// app.use(express.static("public"));
+app.use(express.static("public"));
 
+const upload = multer({ dest: "public/photo" });
 // Untuk mengakses file statis (khusus Vercel)
-import path from "path";
-const __dirname = path.dirname(new URL(import.meta.url).pathname);
-app.use(express.static(path.resolve(__dirname, "public")));
-
+// import path from "path";
+// import { fileURLToPath } from "url";
+// const __filename = fileURLToPath(import.meta.url);
+// const _dirname = path.dirname(_filename);
+// app.use(express.static(path.join(__dirname, "public")));
 // Untuk membaca body berformat JSON
 app.use(express.json());
 
@@ -71,7 +78,7 @@ app.post("/api/login", async (req, res) => {
       `SELECT * FROM login where username='${req.body.username}'`
     );
     if (results.rows.length > 0) {
-      if (await bcrypt.compare(req.body.password, results.rows[0].password)) {
+      if (await bcrypt.compare(req.body.password,results.rows[0].password)) {
         const token = jwt.sign(results.rows[0], process.env.SECRET_KEY);
         res.cookie("token", token);
         res.send("Login berhasil.");
@@ -85,10 +92,6 @@ app.post("/api/login", async (req, res) => {
     }
   });
 // Dapatkan mahasiswa saat ini (yang sedang login)
-app.get("/api/me", (req, res) => {
-  const me = jwt.verify(req.cookies.token, process.env.SECRET_KEY);
-  res.json(me);
-});
 
 // Logout (hapus token)
 app.get("/api/logout", (_req, res) => {
@@ -97,23 +100,16 @@ app.get("/api/logout", (_req, res) => {
   res.send("Logout berhasil.");
 });
 
-// ROUTE MAHASISWA
+// ROUTE BARANG 
 
 // Dapatkan semua
-app.get("/api/mahasiswa", async (_req, res) => {
-  const results = await client.query("SELECT * FROM mahasiswa ORDER BY id");
+app.get("/api/barang", async (_req, res) => {
+  const results = await client.query("SELECT * FROM barang ORDER BY id");
   res.json(results.rows);
 });
 
-// Dapatkan satu
-app.get("/api/mahasiswa/:id", async (req, res) => {
-  const results = await client.query(
-    `SELECT * FROM mahasiswa WHERE id = ${req.params.id}`
-  );
-  res.json(results.rows[0]);
-});
 
-// Tambah
+// Tambah daftar
 app.post("/api/daftar", async (req, res) => {
   const salt = await bcrypt.genSalt();
   const hash = await bcrypt.hash(req.body.password, salt);
@@ -123,32 +119,40 @@ app.post("/api/daftar", async (req, res) => {
   res.send("Mahasiswa berhasil ditambahkan.");
 });
 
-const salt = await bcrypt.genSalt(10);
-const hash = await bcrypt.hash("000", salt);
-console.log(hash);
+
+//tambah barang
+app.post("/api/barang",upload.single("foto"), async (req, res) => {
+  await client.query(
+    `INSERT INTO barang(nama_barang,harga,deskripsi,id_kategori,foto)VALUES('${req.body.nama_barang}',${req.body.harga},'${req.body.deskripsi}', ${req.body.id_kategori},'${req.file.filename}')`
+  );
+  res.send("barang berhasil ditambahkan.");
+});
+
 
 
 // Edit
-app.put("/api/mahasiswa/:id", async (req, res) => {
+app.put("/api/barang/:id",upload.single("foto"), async (req, res) => {
+  console.log(req.body);
+  console.log(req.params.id);
   await client.query(
-    `UPDATE mahasiswa SET nim = '${req.body.nim}', nama = '${req.body.nama}' WHERE id = ${req.params.id}`
+    `UPDATE barang SET nama_barang = '${req.body.nama_barang}', harga = ${req.body.harga}, deskripsi = '${req.body.deskripsi}', id_kategori = ${req.body.id_kategori},foto = '${req.file.filename}'  WHERE id=${req.params.id}`
   );
-  res.send("Mahasiswa berhasil diedit.");
+  res.send("barang berhasil diedit.");
 });
 
 // Hapus
-app.delete("/api/mahasiswa/:id", async (req, res) => {
-  await client.query(`DELETE FROM mahasiswa WHERE id = ${req.params.id}`);
-  res.send("Mahasiswa berhasil dihapus.");
+app.delete("/api/barang/:id", async (req, res) => {
+  await client.query(`
+  DELETE FROM barang WHERE id = ${req.params.id}`);
+  res.send("barang berhasil dihapus.");
 });
 
-// ROUTE PELATIHAN
-
-// Dapatkan semua
-app.get("/api/pelatihan", async (_req, res) => {
-  const results = await client.query("SELECT * FROM pelatihan");
-  res.json(results.rows);
+//keluar
+app.get("/api/keluar", (_req, res) => {
+  res.clearCookie("token");
+  res.redirect("/home");
 });
+
 
 // MEMULAI SERVER
 

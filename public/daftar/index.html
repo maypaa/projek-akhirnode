@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login page</title>
+    <link rel="stylesheet" href="../assets/daftar.css">
+    <link rel="shortcut icon" href="#" type="image/x-icon">
+</head>
+
+<body>
+  <button class="tmblbtn"><a href="../menu/index.html">Kembali</a></button>
+        <div class="avatar">
+            <i class="fa fa-user"></i>
+        </div>
+        <form name="login" class="login">
+            <h2>Daftar Form</h2>
+            <div class="box-login">
+                <i class="fas fa-envelope"></i>
+                <input type="text" placeholder="Username" name="username" required
+                autofocus>
+            </div>
+            <div class="box-login">
+                <i class="fas fa-lock"></i>
+                <input type="text" placeholder="Password" name="password" required>
+            </div>
+            <button type="submit" class="btn-login">
+                Daftar
+            </button>
+        </form>
+        <script>
+            document.login.onsubmit = async (e) => {
+              e.preventDefault();
+              const response = await fetch("/api/daftar", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  username: document.login.username.value,
+                  password: document.login.password.value,
+                }),
+              });
+              if (response.ok) {
+                const token = await response.text();
+                localStorage.setItem("token", token);
+                alert("berhasil daftar");
+                location.href ="/login";
+              } else {
+                document.login.password.value='';
+                document.login.username.value='';
+                const message = await response.text();
+                alert(message);
+              }
+            };
+          </script>
+      
+
+    </div>
+
+
+</body>
+
+</html>

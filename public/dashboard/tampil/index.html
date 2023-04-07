@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Product</title>
+    <link rel="stylesheet" href="../../assets/tabel2.css" />
+    <link rel="shortcut icon" href="#" type="image/x-icon" />
+  </head>
+  <body>
+    <button class="tmblbtn">
+      <a href="../../menu/index.html" class="btn">Kembali</a>
+    </button>
+    <h2>Data Product</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Nama</th>
+          <th>harga</th>
+          <th>Id Kategori</th>
+          <th>Deskripsi</th>
+          <th>Foto</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </body>
+  <script>
+    fetch("/api/barang", {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        for (let i = 0; i < data.length; i++) {
+          const tr = document.createElement("tr");
+
+          const tdId = document.createElement("td");
+          tdId.textContent = data[i].id;
+          tr.appendChild(tdId);
+
+          const tdNim = document.createElement("td");
+          tdNim.textContent = data[i].nama_barang;
+          tr.appendChild(tdNim);
+
+          const tdName = document.createElement("td");
+          tdName.textContent = "Rp." + data[i].harga;
+          tr.appendChild(tdName);
+
+          const id = document.createElement("td");
+          id.textContent = data[i].id_kategori;
+          tr.appendChild(id);
+
+          const des = document.createElement("td");
+          des.textContent = data[i].deskripsi;
+          tr.appendChild(des);
+
+          const tdPhoto = document.createElement("td");
+          const imgPhoto = document.createElement("img");
+          imgPhoto.src = `/photo/${data[i].foto}`;
+          tdPhoto.appendChild(imgPhoto);
+          tr.appendChild(tdPhoto);
+
+          document.querySelector("tbody").appendChild(tr);
+        }
+      });
+  </script>
+</html>

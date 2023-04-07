@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Menu Admin</title>
+    <link rel="stylesheet" href="../assets/style5.css" />
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  </head>
+  <body>
+    <input type="checkbox" id="check" />
+    <label for="check">
+      <i class="fas fa-bars" id="btn"></i>
+      <i class="fas fa-times" id="cancel"></i>
+    </label>
+    <div class="sidebar">
+      <header>ADMIN</header>
+      <ul>
+        <li>
+          <a href="../dashboard/insert/index.html"
+            ><i class="fas fa-qrcode"></i>Tambah Barang</a
+          >
+        </li>
+        <li>
+          <a href="../dashboard/edit/index.html"
+            ><i class="fas fa-link"></i>Edit Barang</a
+          >
+        </li>
+        <li>
+          <a href="../dashboard/tampil/index.html">
+            <i class="fas fa-calendar-week"></i>Detail barang</a
+          >
+        </li>
+        <li>
+          <a href="../dashboard/contact/index.html"
+            ><i class="far fa-question-circle"></i>Lihat Pengguna</a
+          >
+        </li>
+        <li>
+          <form action="" name="keluar">
+            <button class="keluar">keluar</button>
+          </form>
+        </li>
+      </ul>
+    </div>
+
+    <section></section>
+    <script>
+      const tombol = document.keluar;
+      tombol.onclick = () => {
+        fetch("/api/keluar").then((response) => {
+          if (response.ok) {
+            location.href = "../home";
+          }
+        });
+      };
+    </script>
+  </body>
+</html>

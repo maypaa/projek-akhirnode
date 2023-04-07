@@ -1,0 +1,272 @@
+@import url('http://fonts.googleapis.com/css/family=Quicsand:400,500&subset=latin-ext');
+
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Roboto";
+  }
+  
+  body {
+    background-color: #A2B5BB;
+  }
+  
+  body::-webkit-scrollbar {
+    display: none;
+  }
+  
+  header {
+    display: flex;
+    background-color: #CFD2CF;
+    opacity: 0.8;
+    padding: 0.5rem;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 9;
+    justify-content: end;
+    align-items: center;
+  }
+  
+  .login {
+    border: 1px solid white;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    background-color: white;
+  }
+  .logo h2 {
+    font-size: 29px;
+  }
+  .login > a {
+    text-decoration: none;
+    padding: 1rem;
+    font-weight: 700;
+    color: #413f42;
+  }
+  .deksiption {
+    width: 91%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.deksiption p {
+  text-align: center;
+  width: 68%;
+}
+.container-3 {
+  display: flex;
+  justify-content: center;
+}
+  .logo>a{
+      color: #000;
+      text-decoration: none;
+  }
+  .tidak{
+    z-index: -1;
+    visibility: hidden;
+  }
+  
+  input[type="text"] {
+    width: 100%;
+    border: 0px solid;
+    outline: none;
+  }
+  
+  nav {
+    margin-right: 2.5rem;
+    display: flex;
+    align-items: center;
+  }
+  
+  nav > a {
+    margin-right: 2rem;
+    padding: 0.5rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: #000;
+  }
+  
+  h2 > a {
+    text-decoration: none;
+    color: #000;
+  }
+  
+  #logo > * {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    padding: 0.5rem;
+    margin-left: 1rem;
+    text-decoration: none;
+    color: #dcd7c9;
+  }
+  
+  #menu {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem;
+    text-decoration: none;
+  }
+  
+  #menu > * {
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
+  }
+  
+  .menu-sidebar {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+  .menu-sidebar > a {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .menu-sidebar > * {
+    display: flex;
+    align-items: flex-end;
+    text-decoration: none;
+    color: #000;
+  }
+  
+  aside {
+    width: 20%;
+    font-weight: 500;
+    background-image: linear-gradient(to right, #899194, #fafdfa);
+    z-index: 10;
+    top: 0;
+    height: 100%;
+    position: fixed;
+  }
+  
+  aside > a {
+    padding: 1rem;
+  }
+  
+  aside #menu .home a{
+    text-decoration: none;
+    color: #000;
+    margin-left: 5px;
+  }    
+
+
+.main{
+    width: 44%;
+    height: 520px;
+    background-color: #fafafa;
+    margin: 0 auto;
+    padding-top: 20px;
+    border-radius: 10px;
+    border: 1px solid #eeeeee;
+    display :grid;
+}
+
+.img {
+    background-image: url(./image/IMG_20210807_172755_661.jpg);
+    background-color: #eaeaea;
+    background-size: cover;
+    border-radius: 100px;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    border: 1px solid #eaeaea;
+
+}
+
+.main h1{
+    text-align: center;
+    font-size: 30px;
+    margin: 0;
+    font-weight: bold;
+    color: #171520;
+}
+
+.main .text {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 15px;
+    color: #334f64;
+}
+
+p{
+    margin: 0 auto;
+    padding-top: 20px;
+    width: 450px;
+    height: auto;
+    color: #324e63;
+}
+main {
+  margin-top: 50px;
+}
+
+
+
+
+/* responsive */
+
+@media (max-width: 1100px) {
+  body {
+    font-size: 18px;
+  }
+  .logo h2 {
+    font-size: 22px;
+  }
+}
+@media(max-width:838px) {
+  aside {
+    width: 27%;
+  }
+}
+
+@media (max-width: 696px) {
+  body {
+    font-size: 13px;
+  }
+  .logo h2 {
+    font-size:  18px;
+  }
+}
+@media (max-width: 534px) {
+  aside {
+    width: 31%;
+  }
+  .main {
+    margin: 0 10.6rem;
+  }
+  .main h1 {
+    font-size: 22px;
+  }
+}
+
+@media(max-width: 460px) {
+  aside {
+    width: 36%;
+  }
+}
+
+@media(max-width: 397px) {
+  body {
+    font-size: 10px;
+  }
+  .logo h2{
+    font-size: 15px;
+  }
+  nav {
+    margin: 0;
+  }
+  aside {
+    width: 39%;
+  }
+  .img {
+    width: 122px;
+    height: 140px;
+  }
+  .main {
+    margin: 0 8.6rem;
+  }
+}
+
+
+

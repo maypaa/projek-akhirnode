@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tambah barang</title>
+    <link rel="stylesheet" href="../../assets/insert.css" />
+    <link rel="shortcut icon" href="#" type="image/x-icon" />
+  </head>
+
+  <body>
+    <button class="tmblbtn">
+      <a href="../../menu/index.html" class="btn">Kembali</a>
+    </button>
+    <div class="avatar">
+      <i class="fa fa-user"></i>
+    </div>
+    <form name="insert" class="login">
+      <h2>Tambah barang</h2>
+      <div class="box-login">
+        <i class="fas fa-envelope"></i>
+        <input
+          type="text"
+          name="nama_barang"
+          placeholder="nama_barang"
+          required
+          autofocus
+        />
+      </div>
+      <div class="box-login">
+        <i class="fas fa-lock"></i>
+        <input type="text" name="harga" placeholder="harga" required />
+      </div>
+      <div class="box-login">
+        <i class="fas fa-lock"></i>
+        <input type="text" name="deskripsi" placeholder="deskripsi" required />
+      </div>
+      <div class="box-login">
+        <i class="fas fa-lock"></i>
+        <input
+          type="text"
+          name="id_kategori"
+          placeholder="id_kategori"
+          required
+        />
+      </div>
+
+      <div class="box-login">
+        <label>
+          Foto
+          <input type="file" name="foto" />
+        </label>
+      </div>
+      <button class="btn-login">Simpan</button>
+    </form>
+    <script>
+      document.insert.onsubmit = async (e) => {
+        // console.log(`haechan`);
+        e.preventDefault();
+        let data = new FormData();
+        data.append("nama_barang", document.insert.nama_barang.value);
+        data.append("harga", document.insert.harga.value);
+        data.append("deskripsi", document.insert.deskripsi.value);
+        data.append("id_kategori", document.insert.id_kategori.value);
+        data.append("foto", document.insert.foto.files[0]);
+        await fetch("/api/barang", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          method: "POST",
+          body: data,
+        });
+        location.href = "/dashboard";
+      };
+    </script>
+  </body>
+</html>
